@@ -5,7 +5,7 @@
 [![Hyva Themes Module](https://img.shields.io/badge/Hyva_Themes-Module-3df0af.svg?longCache=true&style=for-the-badge)](https://hyva.io/)
 ![License](https://img.shields.io/github/license/siteation/magento2-hyva-icons-flags?color=%23234&style=for-the-badge)
 
-This Magento 2 module adds the option to use [Flagpack](https://flagpack.xyz/) in your Hyvä frontend.
+This Magento 2 module adds the option to use [Flagpack](https://flagpack.xyz/) icons in your Hyvä frontend.
 
 This requires that you have a working Hyvä frontend,
 this icon pack was made specifically for Hyvä Themes and will not work out of the box with any other frontend.
