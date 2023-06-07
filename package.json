@@ -16,7 +16,11 @@
   },
   "bugs": "https://github.com/Siteation/magento2-hyva-icons-flags/issues",
   "scripts": {
-    "build:icons": "cp -r ./node_modules/flagpack-core/svg/m/*.svg ./view/frontend/web/svg/flags",
+    "icons:del": "rm -rf ./view/frontend/web/svg/flags/*.svg",
+    "icons:get": "cp -r ./node_modules/flagpack-core/svg/m/*.svg ./view/frontend/web/svg/flags",
+    "icons:rename": "node ./bin/rename-icons",
+    "icons:optimize": "node ./bin/optimize-icons",
+    "build:icons": "npm run icons:del && npm run icons:get && npm run icons:rename && npm run icons:optimize",
     "build:signature": "./bin/generate-icons-signatures",
     "build": "npm run build:icons && npm run build:signature"
   },

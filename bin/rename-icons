@@ -1,0 +1,31 @@
+#!/usr/bin/node
+
+const fs = require("fs");
+const path = require("path");
+
+const folderPath = "./view/frontend/web/svg/flags";
+
+function renameFilesToLowerCase(folderPath) {
+  fs.readdir(folderPath, (err, files) => {
+    if (err) {
+      console.error("Error reading folder:", err);
+      return;
+    }
+
+    files.forEach((file) => {
+      const oldFilePath = path.join(folderPath, file);
+      const newFilePath = path.join(folderPath, file.toLowerCase());
+
+      fs.rename(oldFilePath, newFilePath, (err) => {
+        if (err) {
+          console.error(`Error renaming file ${oldFilePath}:`, err);
+          return;
+        }
+
+        console.log(`Renamed file: ${oldFilePath} --> ${newFilePath}`);
+      });
+    });
+  });
+}
+
+renameFilesToLowerCase(folderPath);

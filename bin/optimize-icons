@@ -1,0 +1,46 @@
+#!/usr/bin/node
+
+const fs = require("fs");
+const path = require("path");
+
+const folderPath = "./view/frontend/web/svg/flags";
+const searchText = '<svg width="20" height="15"';
+const replacementText = '<svg width="24" height="24" viewbox="0 0 20 15"';
+
+function replaceTextInFiles(folderPath, searchText, replacementText) {
+  fs.readdir(folderPath, (err, files) => {
+    if (err) {
+      console.error("Error reading folder:", err);
+      return;
+    }
+
+    files.forEach((file) => {
+      const filePath = path.join(folderPath, file);
+
+      fs.readFile(filePath, "utf8", (err, data) => {
+        if (err) {
+          console.error(`Error reading file ${filePath}:`, err);
+          return;
+        }
+
+        const updatedData = data.replace(
+          new RegExp(searchText, "g"),
+          replacementText
+        );
+
+        fs.writeFile(filePath, updatedData, "utf8", (err) => {
+          if (err) {
+            console.error(`Error writing file ${filePath}:`, err);
+            return;
+          }
+
+          console.log(
+            `Replaced '${searchText}' with '${replacementText}' in file ${filePath}`
+          );
+        });
+      });
+    });
+  });
+}
+
+replaceTextInFiles(folderPath, searchText, replacementText);
