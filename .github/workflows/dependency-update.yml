@@ -1,0 +1,40 @@
+name: Dependency Update
+
+env:
+  NODE: 18
+  GIT_USER: "Automated"
+  GIT_EMAIL: "actions@users.noreply.github.com"
+  GIT_BRANCH: actions/update-icons
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  dependency_update:
+    name: Update icons
+    runs-on: ubuntu-latest
+    if: |
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'dependabot/')
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "${{ env.NODE }}"
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm run build
+      - name: Creating PR for new Icons
+        run: |-
+          timestamp=$(date +"%Y-%m-%d")
+          git config user.name ${{ env.GIT_USER }}
+          git config user.email ${{ env.GIT_EMAIL }}
+          git checkout -b "${{ env.GIT_BRANCH }}-${timestamp}"
+          git add -A
+          git commit -m "Update icons with dependency update" || exit 0
+          git push --set-upstream origin ${{ env.GIT_BRANCH }}-${timestamp}
+          gh pr create --title "Update icons with new dependency update" --body "This updates the Hyva version with the latest icons from Flagpack Icons" -B main --label dependencies
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
