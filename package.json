@@ -25,6 +25,6 @@
     "build": "npm run build:icons && npm run build:signature"
   },
   "devDependencies": {
-    "flagpack-core": "^2.0.0"
+    "flagpack-core": "^2.1.0"
   }
 }
